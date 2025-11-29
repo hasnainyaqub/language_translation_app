@@ -81,19 +81,27 @@ if st.button("Translate 🔄", type="primary", use_container_width=True):
 # Example texts
 st.markdown("---")
 st.subheader("Example Translations")
-examples = {
-    "Hello, how are you?": "سلام، آپ کیسے ہیں؟",
-    "I am fine, thank you": "میں ٹھیک ہوں، شکریہ",
-    "The weather is very nice today": "آج موسم بہت اچھا ہے",
-    "What is your name?": "آپ کا نام کیا ہے؟",
-    "Good morning": "صبح بخیر"
-}
-
 st.markdown("Click on an example to try it:")
-for english, urdu in examples.items():
-    if st.button(f"{english} → {urdu}", key=english):
-        st.session_state.english_input = english
-        st.rerun()
+
+examples = [
+    "Hello, how are you?",
+    "I am fine, thank you",
+    "The weather is very nice today",
+    "What is your name?",
+    "Good morning"
+]
+
+cols = st.columns(3)
+for idx, example in enumerate(examples):
+    with cols[idx % 3]:
+        if st.button(example, key=f"example_{idx}", use_container_width=True):
+            with st.spinner("Translating..."):
+                try:
+                    translation = translate_text(example, tokenizer, model)
+                    st.success("Translation complete!")
+                    st.info(f"**English:** {example}\n\n**Urdu:** {translation}")
+                except Exception as e:
+                    st.error(f"Translation error: {str(e)}")
 
 # Footer
 st.markdown("---")
