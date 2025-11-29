@@ -4,7 +4,7 @@ import torch
 
 # Set page config
 st.set_page_config(
-    page_title="Urdu to English Translator",
+    page_title="English to Urdu Translator",
     page_icon="🌐",
     layout="centered"
 )
@@ -13,13 +13,13 @@ st.set_page_config(
 @st.cache_resource
 def load_model():
     """Load the translation model and tokenizer"""
-    model_name = "Helsinki-NLP/opus-mt-ur-en"
+    model_name = "Helsinki-NLP/opus-mt-en-ur"
     tokenizer = MarianTokenizer.from_pretrained(model_name)
     model = MarianMTModel.from_pretrained(model_name)
     return tokenizer, model
 
 def translate_text(text, tokenizer, model):
-    """Translate Urdu text to English"""
+    """Translate English text to Urdu"""
     # Tokenize the input text
     inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=512)
     
@@ -32,8 +32,8 @@ def translate_text(text, tokenizer, model):
     return translated_text
 
 # App UI
-st.title("🌐 Urdu to English Translator")
-st.markdown("Translate Urdu text to English using AI-powered neural machine translation")
+st.title("🌐 English to Urdu Translator")
+st.markdown("Translate English text to Urdu using AI-powered neural machine translation")
 
 # Load model
 with st.spinner("Loading translation model..."):
@@ -48,49 +48,51 @@ with st.spinner("Loading translation model..."):
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("Urdu Input")
-    urdu_text = st.text_area(
-        "Enter Urdu text:",
+    st.subheader("English Input")
+    english_text = st.text_area(
+        "Enter English text:",
         height=200,
-        placeholder="یہاں اردو متن درج کریں...",
-        key="urdu_input"
+        placeholder="Type your English text here...",
+        key="english_input"
     )
 
 with col2:
-    st.subheader("English Translation")
+    st.subheader("Urdu Translation")
     translation_placeholder = st.empty()
 
 # Translate button
 if st.button("Translate 🔄", type="primary", use_container_width=True):
-    if urdu_text.strip():
+    if english_text.strip():
         with st.spinner("Translating..."):
             try:
-                translation = translate_text(urdu_text, tokenizer, model)
+                translation = translate_text(english_text, tokenizer, model)
                 with col2:
                     translation_placeholder.text_area(
                         "Translation:",
                         value=translation,
                         height=200,
-                        key="english_output"
+                        key="urdu_output"
                     )
             except Exception as e:
                 st.error(f"Translation error: {str(e)}")
     else:
-        st.warning("Please enter some Urdu text to translate")
+        st.warning("Please enter some English text to translate")
 
 # Example texts
 st.markdown("---")
 st.subheader("Example Translations")
 examples = {
-    "سلام، آپ کیسے ہیں؟": "Hello, how are you?",
-    "میں ٹھیک ہوں، شکریہ": "I am fine, thank you",
-    "آج موسم بہت اچھا ہے": "The weather is very nice today"
+    "Hello, how are you?": "سلام، آپ کیسے ہیں؟",
+    "I am fine, thank you": "میں ٹھیک ہوں، شکریہ",
+    "The weather is very nice today": "آج موسم بہت اچھا ہے",
+    "What is your name?": "آپ کا نام کیا ہے؟",
+    "Good morning": "صبح بخیر"
 }
 
 st.markdown("Click on an example to try it:")
-for urdu, english in examples.items():
-    if st.button(f"{urdu}", key=urdu):
-        st.session_state.urdu_input = urdu
+for english, urdu in examples.items():
+    if st.button(f"{english} → {urdu}", key=english):
+        st.session_state.english_input = english
         st.rerun()
 
 # Footer
@@ -123,7 +125,7 @@ streamlit run app.py
     st.info(
         """
         This app uses the Helsinki-NLP OPUS-MT model 
-        for Urdu to English translation. The model is 
+        for English to Urdu translation. The model is 
         based on the Marian NMT framework and trained 
         on parallel corpora.
         """
