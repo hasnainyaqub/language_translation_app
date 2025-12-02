@@ -241,7 +241,6 @@ LANGUAGES = {
     "🇷🇺 Russian": {"model": "Helsinki-NLP/opus-mt-en-ru", "code": "ru"},
     "🇨🇳 Chinese": {"model": "Helsinki-NLP/opus-mt-en-zh", "code": "zh"},
     "🇯🇵 Japanese": {"model": "Helsinki-NLP/opus-mt-en-jap", "code": "ja"},
-    "🇰🇷 Korean": {"model": "Helsinki-NLP/opus-mt-en-ko", "code": "ko"},
     "🇸🇦 Arabic": {"model": "Helsinki-NLP/opus-mt-en-ar", "code": "ar"},
     "🇮🇳 Hindi": {"model": "Helsinki-NLP/opus-mt-en-hi", "code": "hi"},
     "🇹🇷 Turkish": {"model": "Helsinki-NLP/opus-mt-en-tr", "code": "tr"},
