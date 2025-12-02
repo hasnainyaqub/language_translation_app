@@ -10,141 +10,222 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for modern UI
+# Custom CSS for stable, modern UI
 st.markdown("""
     <style>
-    /* Main background gradient */
+    /* Import Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+    
+    /* Main app styling */
     .stApp {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: 'Inter', sans-serif;
     }
     
-    /* Custom container styling */
-    .main-container {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
-        padding: 2rem;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(10px);
+    /* Remove default padding */
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 5rem;
     }
     
     /* Header styling */
     .main-header {
         text-align: center;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #1e293b;
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.5px;
+    }
+    
+    .gradient-text {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     }
     
     .sub-header {
         text-align: center;
-        color: #555;
-        font-size: 1.2rem;
+        color: #64748b;
+        font-size: 1.1rem;
         margin-bottom: 2rem;
-        font-weight: 400;
+        font-weight: 500;
     }
     
-    /* Language button styling */
-    .stButton button {
-        border-radius: 12px;
-        border: 2px solid transparent;
-        transition: all 0.3s ease;
+    /* Section headers */
+    h3 {
+        color: #1e293b !important;
+        font-weight: 700 !important;
+        font-size: 1.3rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Language selection section */
+    .lang-section {
+        background: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+    
+    /* Button styling */
+    .stButton > button {
+        border-radius: 10px;
         font-weight: 600;
-        height: 45px;
+        height: 42px;
+        border: 2px solid #e2e8f0;
+        transition: all 0.2s ease;
+        background-color: white;
+        color: #475569;
     }
     
-    .stButton button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    .stButton > button:hover {
+        border-color: #8b5cf6;
+        color: #8b5cf6;
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+        transform: translateY(-1px);
+    }
+    
+    /* Primary button (selected language) */
+    .stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        color: white;
+        border: none;
+    }
+    
+    .stButton > button[kind="primary"]:hover {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        box-shadow: 0 8px 16px rgba(139, 92, 246, 0.3);
     }
     
     /* Text area styling */
-    .stTextArea textarea {
-        border-radius: 15px;
-        border: 2px solid #e0e0e0;
+    .stTextArea > div > div > textarea {
+        border-radius: 12px;
+        border: 2px solid #e2e8f0;
         padding: 1rem;
         font-size: 1rem;
-        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
+        background-color: #f8fafc;
+        color: #1e293b;
+        transition: all 0.2s ease;
     }
     
-    .stTextArea textarea:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    .stTextArea > div > div > textarea:focus {
+        border-color: #8b5cf6;
+        background-color: white;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
     }
     
-    /* Info box styling */
+    /* Info/Alert boxes */
     .stAlert {
-        border-radius: 15px;
-        border-left: 5px solid #667eea;
+        border-radius: 12px;
+        border: none;
+        background-color: #f0f9ff;
+        color: #0c4a6e;
+        padding: 1rem;
+    }
+    
+    div[data-baseweb="notification"] {
+        border-radius: 12px;
+    }
+    
+    /* Success message */
+    .stSuccess {
+        background-color: #f0fdf4;
+        color: #166534;
+        border-left: 4px solid #22c55e;
+    }
+    
+    /* Warning message */
+    .stWarning {
+        background-color: #fffbeb;
+        color: #92400e;
+        border-left: 4px solid #f59e0b;
+    }
+    
+    /* Error message */
+    .stError {
+        background-color: #fef2f2;
+        color: #991b1b;
+        border-left: 4px solid #ef4444;
+    }
+    
+    /* Section divider */
+    .divider {
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+        margin: 2rem 0;
+    }
+    
+    /* Translation cards */
+    .translation-card {
+        background: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border: 2px solid #f1f5f9;
     }
     
     /* Footer styling */
     .footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(255, 255, 255, 0.95);
-        padding: 1rem;
+        background: white;
+        border-top: 1px solid #e2e8f0;
+        padding: 1.5rem;
         text-align: center;
-        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        z-index: 999;
+        margin-top: 3rem;
     }
     
     .developer-name {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         font-weight: 700;
-        color: #667eea;
-        margin-bottom: 0.5rem;
+        color: #1e293b;
+        margin-bottom: 0.75rem;
+    }
+    
+    .social-links {
+        margin: 0.75rem 0;
     }
     
     .social-links a {
-        color: #764ba2;
+        color: #6366f1;
         text-decoration: none;
-        margin: 0 10px;
+        margin: 0 12px;
         font-weight: 600;
-        transition: all 0.3s ease;
+        transition: color 0.2s ease;
     }
     
     .social-links a:hover {
-        color: #667eea;
+        color: #8b5cf6;
         text-decoration: underline;
     }
     
+    .footer-text {
+        color: #64748b;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+    
     /* Sidebar styling */
-    .css-1d391kg, [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    section[data-testid="stSidebar"] {
+        background-color: #f8fafc;
+        border-right: 1px solid #e2e8f0;
     }
     
-    .css-1d391kg .element-container, [data-testid="stSidebar"] .element-container {
-        color: white;
+    section[data-testid="stSidebar"] h2 {
+        color: #1e293b !important;
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
     }
     
-    /* Section divider */
-    .section-divider {
-        height: 3px;
-        background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
-        margin: 2rem 0;
-        border-radius: 2px;
+    /* Remove extra spacing */
+    .element-container {
+        margin-bottom: 0.5rem;
     }
     
-    /* Card effect for columns */
-    .css-1r6slb0 {
-        background: white;
-        border-radius: 15px;
-        padding: 1rem;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    }
-    
-    /* Success message styling */
-    .stSuccess {
-        border-radius: 15px;
-        background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    /* Spinner */
+    .stSpinner > div {
+        border-top-color: #8b5cf6 !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -179,6 +260,7 @@ LANGUAGES = {
     "🇻🇳 Vietnamese": {"model": "Helsinki-NLP/opus-mt-en-vi", "code": "vi"},
     "🇹🇭 Thai": {"model": "Helsinki-NLP/opus-mt-en-th", "code": "th"},
     "🇮🇷 Persian": {"model": "Helsinki-NLP/opus-mt-en-fa", "code": "fa"},
+    "🇮🇱 Hebrew": {"model": "Helsinki-NLP/opus-mt-en-he", "code": "he"},
     "🇧🇩 Bengali": {"model": "Helsinki-NLP/opus-mt-en-bn", "code": "bn"}
 }
 
@@ -213,14 +295,13 @@ if 'selected_language' not in st.session_state:
     st.session_state.selected_language = "🇵🇰 Urdu"
 
 # Header
-st.markdown("<h1 class='main-header'>🌐 AI Language Translator</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-header'><span class='gradient-text'>🌐 AI Language Translator</span></h1>", unsafe_allow_html=True)
 st.markdown("<p class='sub-header'>Translate English to 30+ languages using cutting-edge AI technology</p>", unsafe_allow_html=True)
-
-st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
+st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
 
 # Language Selection
 st.markdown("### 🎯 Select Your Target Language")
-st.markdown("")
+st.write("")
 
 languages_list = list(LANGUAGES.keys())
 cols_per_row = 6
@@ -242,7 +323,7 @@ for row in range(num_rows):
                     st.session_state.selected_language = lang
                     st.rerun()
 
-st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
+st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
 
 # Get selected language
 selected_lang = st.session_state.selected_language
@@ -252,90 +333,94 @@ lang_config = LANGUAGES[selected_lang]
 st.info(f"🎯 **Currently translating:** English → {selected_lang}")
 
 # Load model
-with st.spinner(f"🔄 Loading {selected_lang} translation model..."):
+with st.spinner(f"Loading {selected_lang} translation model..."):
     tokenizer, model, error = load_model(lang_config["model"])
     if error:
-        st.error(f"❌ Error loading model: {error}")
-        st.warning("⚠️ Some models may not be available. Please try another language.")
+        st.error(f"Error loading model: {error}")
+        st.warning("Some models may not be available. Please try another language.")
         st.stop()
     else:
         st.success(f"✅ {selected_lang} model loaded successfully!")
 
-st.markdown("")
+st.write("")
 
 # Translation Interface
-col1, col2 = st.columns(2, gap="large")
+st.markdown("### 📝 Translation Interface")
+col1, col2 = st.columns(2, gap="medium")
 
 with col1:
-    st.markdown("### 📝 English Input")
+    st.markdown("**English Input**")
     input_text = st.text_area(
-        "",
+        "Enter your text",
         height=250,
-        placeholder="Type your English text here and watch the magic happen...",
+        placeholder="Type your English text here...",
         key="input_text_area",
         label_visibility="collapsed"
     )
 
 with col2:
-    st.markdown(f"### 🌍 {selected_lang} Translation")
+    st.markdown(f"**{selected_lang} Translation**")
     output_placeholder = st.empty()
 
 # Translate button
-st.markdown("")
-col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 1])
-with col_btn2:
-    if st.button("🚀 Translate Now", type="primary", use_container_width=True):
-        if input_text.strip():
-            with st.spinner("✨ Translating your text..."):
-                try:
-                    translation = translate_text(input_text, tokenizer, model)
-                    with col2:
-                        output_placeholder.text_area(
-                            "",
-                            value=translation,
-                            height=250,
-                            key="output_text_area",
-                            label_visibility="collapsed"
-                        )
-                    st.balloons()
-                except Exception as e:
-                    st.error(f"❌ Translation error: {str(e)}")
-        else:
-            st.warning("⚠️ Please enter some English text to translate")
+st.write("")
+col_btn = st.columns([2, 1, 2])
+with col_btn[1]:
+    translate_btn = st.button("🚀 Translate", type="primary", use_container_width=True)
 
-st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
+if translate_btn:
+    if input_text.strip():
+        with st.spinner("Translating..."):
+            try:
+                translation = translate_text(input_text, tokenizer, model)
+                with col2:
+                    output_placeholder.text_area(
+                        "Translation result",
+                        value=translation,
+                        height=250,
+                        key="output_text_area",
+                        label_visibility="collapsed"
+                    )
+                st.success("✅ Translation completed successfully!")
+            except Exception as e:
+                st.error(f"Translation error: {str(e)}")
+    else:
+        st.warning("⚠️ Please enter some English text to translate")
+
+st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
 
 # Examples
-st.markdown("### 💡 Quick Examples - Click to Translate")
-st.markdown("")
+st.markdown("### 💡 Quick Examples")
+st.markdown("Click on any example to translate it instantly:")
+st.write("")
 
 cols = st.columns(5)
 for idx, example in enumerate(EXAMPLE_SENTENCES):
     with cols[idx % 5]:
-        if st.button(f"📌 {example}", key=f"example_{idx}", use_container_width=True):
-            with st.spinner("✨ Translating..."):
+        if st.button(example, key=f"example_{idx}", use_container_width=True):
+            with st.spinner("Translating..."):
                 try:
                     translation = translate_text(example, tokenizer, model)
-                    st.success("✅ Translation Complete!")
+                    st.success("✅ Done!")
                     st.info(f"**English:** {example}\n\n**{selected_lang}:** {translation}")
                 except Exception as e:
-                    st.error(f"❌ Error: {str(e)}")
+                    st.error(f"Error: {str(e)}")
 
-# Footer with developer info
-st.markdown("<br><br><br>", unsafe_allow_html=True)
+# Footer
+st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
 st.markdown("""
     <div class='footer'>
         <div class='developer-name'>
             💻 Developed by Hasnain Yaqoob
         </div>
         <div class='social-links'>
-            <a href='https://www.linkedin.com/in/hasnainyaqoob' target='_blank'>🔗 LinkedIn</a> |
-            <a href='https://x.com/Hasnain_Yaqoob_' target='_blank'>🐦 X (Twitter)</a> |
-            <a href='https://github.com/hasnainyaqub' target='_blank'>💻 GitHub</a> |
-            <a href='https://www.kaggle.com/hasnainyaqooob' target='_blank'>📊 Kaggle</a>
+            <a href='https://www.linkedin.com/in/hasnainyaqoob' target='_blank'>LinkedIn</a> |
+            <a href='https://x.com/Hasnain_Yaqoob_' target='_blank'>X (Twitter)</a> |
+            <a href='https://github.com/hasnainyaqub' target='_blank'>GitHub</a> |
+            <a href='https://www.kaggle.com/hasnainyaqooob' target='_blank'>Kaggle</a>
         </div>
-        <div style='margin-top: 0.5rem; color: #888; font-size: 0.9rem;'>
-            Powered by Helsinki-NLP OPUS-MT Models | Built with ❤️ using Streamlit & Transformers
+        <div class='footer-text'>
+            Powered by Helsinki-NLP OPUS-MT Models | Built with Streamlit & Transformers
         </div>
     </div>
 """, unsafe_allow_html=True)
@@ -350,11 +435,11 @@ with st.sidebar:
     
     st.markdown("## 🌍 Features")
     st.markdown(f"""
-    ✅ **{len(LANGUAGES)} Languages** Supported  
-    ✅ AI-Powered Translation  
-    ✅ Real-time Processing  
-    ✅ Modern & Intuitive UI  
-    ✅ Fast & Accurate Results  
+    - ✅ **{len(LANGUAGES)} Languages** Supported
+    - ✅ AI-Powered Translation
+    - ✅ Real-time Processing
+    - ✅ Modern & Clean UI
+    - ✅ Fast & Accurate Results
     """)
     
     st.markdown("## ℹ️ About")
@@ -363,8 +448,8 @@ with st.sidebar:
         Helsinki-NLP OPUS-MT models powered by 
         the Marian NMT framework.
         
-        **First-time use:** Models are downloaded 
-        and cached automatically for each language.
+        **Note:** Models are downloaded and 
+        cached automatically on first use.
     """)
     
     st.markdown("## 📧 Contact")
@@ -372,5 +457,5 @@ with st.sidebar:
         **Hasnain Yaqoob**  
         AI/ML Developer
         
-        Feel free to connect on social media!
+        Connect on social media for updates!
     """)
