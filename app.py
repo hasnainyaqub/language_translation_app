@@ -247,20 +247,13 @@ LANGUAGES = {
     "🇳🇱 Dutch": {"model": "Helsinki-NLP/opus-mt-en-nl", "code": "nl"},
     "🇵🇱 Polish": {"model": "Helsinki-NLP/opus-mt-en-pl", "code": "pl"},
     "🇸🇪 Swedish": {"model": "Helsinki-NLP/opus-mt-en-sv", "code": "sv"},
-    "🇬🇷 Greek": {"model": "Helsinki-NLP/opus-mt-en-el", "code": "el"},
-    "🇨🇿 Czech": {"model": "Helsinki-NLP/opus-mt-en-cs", "code": "cs"},
     "🇷🇴 Romanian": {"model": "Helsinki-NLP/opus-mt-en-ro", "code": "ro"},
     "🇭🇺 Hungarian": {"model": "Helsinki-NLP/opus-mt-en-hu", "code": "hu"},
     "🇫🇮 Finnish": {"model": "Helsinki-NLP/opus-mt-en-fi", "code": "fi"},
     "🇩🇰 Danish": {"model": "Helsinki-NLP/opus-mt-en-da", "code": "da"},
     "🇳🇴 Norwegian": {"model": "Helsinki-NLP/opus-mt-en-no", "code": "no"},
     "🇺🇦 Ukrainian": {"model": "Helsinki-NLP/opus-mt-en-uk", "code": "uk"},
-    "🇮🇩 Indonesian": {"model": "Helsinki-NLP/opus-mt-en-id", "code": "id"},
-    "🇻🇳 Vietnamese": {"model": "Helsinki-NLP/opus-mt-en-vi", "code": "vi"},
-    "🇹🇭 Thai": {"model": "Helsinki-NLP/opus-mt-en-th", "code": "th"},
-    "🇮🇷 Persian": {"model": "Helsinki-NLP/opus-mt-en-fa", "code": "fa"},
-    "🇮🇱 Hebrew": {"model": "Helsinki-NLP/opus-mt-en-he", "code": "he"},
-    "🇧🇩 Bengali": {"model": "Helsinki-NLP/opus-mt-en-bn", "code": "bn"}
+    "🇮🇷 Persian": {"model": "Helsinki-NLP/opus-mt-en-fa", "code": "fa"}
 }
 
 EXAMPLE_SENTENCES = [
@@ -295,7 +288,7 @@ if 'selected_language' not in st.session_state:
 
 # Header
 st.markdown("<h1 class='main-header'><span class='gradient-text'>🌐 AI Language Translator</span></h1>", unsafe_allow_html=True)
-st.markdown("<p class='sub-header'>Translate English to 30+ languages using cutting-edge AI technology</p>", unsafe_allow_html=True)
+st.markdown("<p class='sub-header'>Translate English to 20+ languages using cutting-edge AI technology</p>", unsafe_allow_html=True)
 st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
 
 # Language Selection
